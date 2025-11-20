@@ -1,18 +1,67 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+-- 🛡️ واجهة كبيرهم مع 3 أزرار + حذف السكربت
+wait(1)
 
-# Other files and folders
-.settings/
+local sg = Instance.new("ScreenGui", game.CoreGui)
+sg.ResetOnSpawn = false
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+local frame = Instance.new("Frame", sg)
+frame.Size = UDim2.new(0, 380, 0, 450)
+frame.Position = UDim2.new(0.5, -190, 0.5, -225)
+frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+frame.Active = true
+frame.Draggable = true
+frame.BorderSizePixel = 0
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+-- عنوان الواجهة
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+title.Text = "كبيرهم"
+title.TextColor3 = Color3.new(1,1,1)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 22
+
+-- دالة إنشاء صندوق + أزرار
+local function createScriptBox(yPos)
+    local box = Instance.new("TextBox", frame)
+    box.Size = UDim2.new(1, -20, 0, 100)
+    box.Position = UDim2.new(0, 10, 0, yPos)
+    box.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    box.TextColor3 = Color3.new(1,1,1)
+    box.Font = Enum.Font.Code
+    box.TextSize = 18
+    box.MultiLine = true
+    box.ClearTextOnFocus = false
+    box.Text = "-- ضع السكربت هنا"
+
+    local runBtn = Instance.new("TextButton", frame)
+    runBtn.Size = UDim2.new(0.45, -5, 0, 35)
+    runBtn.Position = UDim2.new(0, 10, 0, yPos + 105)
+    runBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 255)
+    runBtn.Text = "▶ Run"
+    runBtn.TextColor3 = Color3.new(1,1,1)
+    runBtn.Font = Enum.Font.SourceSansBold
+    runBtn.TextSize = 18
+    runBtn.MouseButton1Click:Connect(function()
+        pcall(function()
+            loadstring(box.Text)()
+        end)
+    end)
+
+    local delBtn = Instance.new("TextButton", frame)
+    delBtn.Size = UDim2.new(0.45, -5, 0, 35)
+    delBtn.Position = UDim2.new(0.55, -5, 0, yPos + 105)
+    delBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+    delBtn.Text = "❌ Delete"
+    delBtn.TextColor3 = Color3.new(1,1,1)
+    delBtn.Font = Enum.Font.SourceSansBold
+    delBtn.TextSize = 18
+    delBtn.MouseButton1Click:Connect(function()
+        box.Text = "-- ضع السكربت هنا"
+    end)
+end
+
+-- إنشاء 3 صناديق مع أزرار
+createScriptBox(50)   -- الصندوق 1
+createScriptBox(170)  -- الصندوق 2
+createScriptBox(290)  -- الصندوق 3
